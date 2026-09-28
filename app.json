@@ -17,9 +17,8 @@
     "android": {
       "package": "com.r3ne88.carrito",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#1764EE",
         "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "permissions": [
@@ -44,6 +43,15 @@
           "cameraPermission": "Carrito usa la cámara para leer el código de barras de tus productos y sumarlos a tu compra. No se toman ni guardan fotos.",
           "microphonePermission": false,
           "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#1764EE",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 220,
+          "resizeMode": "contain"
         }
       ]
     ]

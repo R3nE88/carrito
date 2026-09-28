@@ -10,6 +10,8 @@ Hecha con Expo SDK 57 + React Native + TypeScript.
 
 ## 1. Probarla en tu celular con Expo Go
 
+No necesitas cuenta de Expo para esto.
+
 Necesitas [Node.js](https://nodejs.org) 20 o más reciente en tu computadora y la app **Expo Go** en tu celular ([iPhone](https://apps.apple.com/app/expo-go/id982107779) · [Android](https://play.google.com/store/apps/details?id=host.exp.exponent)).
 
 ```bash
@@ -28,7 +30,7 @@ La computadora y el celular deben estar en la misma red Wi-Fi. Si no conecta, us
 
 ## 2. Generar el APK para Android
 
-El APK se construye en la nube con EAS (gratis, necesitas una cuenta en [expo.dev](https://expo.dev/signup)).
+El APK se construye en la nube con EAS. Es gratis, pero es el único paso que necesita una cuenta en [expo.dev](https://expo.dev/signup).
 
 ```bash
 npx eas-cli@latest login     # entra con tu cuenta de Expo
