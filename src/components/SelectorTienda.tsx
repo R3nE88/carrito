@@ -62,7 +62,7 @@ export function SelectorTienda({ visible, onCerrar }: Props) {
             style={({ pressed }) => [
               styles.opcion,
               {
-                backgroundColor: actual ? c.exitoFondo : c.tarjetaSuave,
+                backgroundColor: actual ? c.infoFondo : c.tarjetaSuave,
                 borderColor: actual ? c.primario : 'transparent',
                 opacity: pressed ? 0.7 : 1,
               },

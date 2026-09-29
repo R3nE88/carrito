@@ -28,9 +28,21 @@ La computadora y el celular deben estar en la misma red Wi-Fi. Si no conecta, us
 
 > Si Expo Go dice que el proyecto no es compatible, actualiza Expo Go desde la tienda de apps (debe soportar SDK 57).
 
-## 2. Generar el APK para Android
+## 2. Generar el APK para Android (automático, sin cuenta de Expo)
 
-El APK se construye en la nube con EAS. Es gratis, pero es el único paso que necesita una cuenta en [expo.dev](https://expo.dev/signup).
+GitHub compila el APK solo cada vez que subes cambios (`git push`). No necesitas instalar nada.
+
+1. Sube tus cambios: `git push`.
+2. En GitHub, pestaña **Actions** → «APK Android»: espera la palomita verde (tarda de 15 a 25 minutos).
+3. El APK queda publicado en **Releases → «Carrito (última versión)»**. Enlace directo que siempre apunta a la versión más reciente:
+   `https://github.com/R3nE88/carrito/releases/latest/download/carrito.apk`
+
+También puedes lanzarlo a mano: Actions → «APK Android» → **Run workflow**. Antes de compilar, revisa tipos, lint y pruebas; si algo falla, no se genera el APK.
+
+> El repositorio es privado: para descargar desde el celular, inicia sesión en GitHub en el navegador (o usa la app de GitHub).
+
+<details>
+<summary>Alternativa: compilar con EAS (necesita cuenta gratis de Expo)</summary>
 
 ```bash
 npx eas-cli@latest login     # entra con tu cuenta de Expo
@@ -38,15 +50,17 @@ npx eas-cli@latest init      # solo la primera vez: crea el proyecto en tu cuent
 npm run build:apk            # = eas build --platform android --profile preview
 ```
 
-Tarda unos minutos. Al terminar, la terminal muestra un enlace y un QR para descargar el `.apk`. También lo encuentras en expo.dev → tu proyecto → Builds.
+</details>
 
 ## 3. Instalar el APK
 
-1. Abre el enlace (o escanea el QR) desde tu Android y descarga el `.apk`.
+1. Abre el enlace desde tu Android y descarga `carrito.apk`.
 2. Ábrelo. Si Android lo pide, permite **«Instalar apps desconocidas»** para tu navegador o administrador de archivos.
 3. Toca **Instalar**. Listo: aparece como «Carrito» en tus apps.
 
-Para actualizar, genera otro APK e instálalo encima; tus datos se conservan. Si desinstalas la app, se borran tus tiendas y precios.
+Para actualizar, descarga el APK nuevo e instálalo encima: tus datos se conservan. Si desinstalas la app, se borran tus tiendas y precios.
+
+> El APK de GitHub va firmado con una llave de prueba incluida en Expo. Es suficiente para uso personal; si algún día la publicas en Play Store, se usa una llave propia (EAS la crea por ti).
 
 ## Cómo se usa
 

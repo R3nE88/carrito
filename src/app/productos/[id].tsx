@@ -164,7 +164,6 @@ export default function PantallaProducto() {
           <View style={styles.botones}>
             <Boton
               titulo="Renombrar"
-              icono="create-outline"
               variante="suave"
               onPress={() => {
                 setNuevoNombre(producto.nombre);
@@ -198,7 +197,7 @@ export default function PantallaProducto() {
               styles.precioFila,
               {
                 backgroundColor: c.tarjeta,
-                borderColor: masBarata ? c.primario : c.borde,
+                borderColor: masBarata ? c.exito : c.borde,
                 opacity: pressed ? 0.7 : 1,
               },
             ]}

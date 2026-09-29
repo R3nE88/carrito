@@ -25,43 +25,47 @@ export interface Colores {
   velo: string;
 }
 
+/** Azul del ícono de la app: color principal (botones, tienda, acciones). */
+const AZUL = '#1764EE';
+
 export const coloresClaros: Colores = {
-  fondo: '#F4F6F5',
+  fondo: '#F3F6FB',
   tarjeta: '#FFFFFF',
-  tarjetaSuave: '#EBEFED',
-  texto: '#111816',
-  textoSuave: '#56625E',
-  borde: '#D9DFDC',
-  primario: '#0B7A43',
+  tarjetaSuave: '#E9EEF7',
+  texto: '#0F172A',
+  textoSuave: '#536078',
+  borde: '#D5DDEA',
+  primario: AZUL,
   primarioTexto: '#FFFFFF',
   peligro: '#C62828',
   peligroFondo: '#FDECEA',
   aviso: '#9A5B00',
   avisoFondo: '#FFF3D6',
+  // El verde se reserva para "más barata" y confirmaciones.
   exito: '#0B7A43',
   exitoFondo: '#DDF3E6',
-  info: '#1F5FAD',
-  infoFondo: '#E3EEFB',
+  info: '#1557D6',
+  infoFondo: '#E4EDFD',
   velo: 'rgba(0,0,0,0.45)',
 };
 
 export const coloresOscuros: Colores = {
-  fondo: '#101413',
-  tarjeta: '#1B211F',
-  tarjetaSuave: '#252D2A',
-  texto: '#F1F5F3',
-  textoSuave: '#A5B1AC',
-  borde: '#33403B',
-  primario: '#35C27A',
-  primarioTexto: '#07130D',
+  fondo: '#0D1320',
+  tarjeta: '#172033',
+  tarjetaSuave: '#212C42',
+  texto: '#EEF2F9',
+  textoSuave: '#A2AEC4',
+  borde: '#2E3A53',
+  primario: '#5B9BFF',
+  primarioTexto: '#06122B',
   peligro: '#FF6B61',
   peligroFondo: '#3A1714',
   aviso: '#F5B941',
   avisoFondo: '#3A2C0C',
   exito: '#35C27A',
   exitoFondo: '#12301F',
-  info: '#79B0F2',
-  infoFondo: '#15263D',
+  info: '#8AB4FF',
+  infoFondo: '#16264A',
   velo: 'rgba(0,0,0,0.65)',
 };
 

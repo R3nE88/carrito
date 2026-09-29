@@ -102,7 +102,7 @@ export default function PantallaComparar() {
             key={t.tiendaId}
             style={[
               styles.tarjeta,
-              { backgroundColor: c.tarjeta, borderColor: t.masBarata ? c.primario : c.borde },
+              { backgroundColor: c.tarjeta, borderColor: t.masBarata ? c.exito : c.borde },
             ]}
             accessibilityLabel={`${t.nombre}: ${formatoDinero(t.total)}${t.faltantes.length ? `, faltan ${t.faltantes.length} precios` : ''}`}
           >

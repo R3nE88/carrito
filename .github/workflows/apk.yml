@@ -1,0 +1,108 @@
+# Compila el APK de Android en GitHub (sin cuenta de Expo) cada vez que subes cambios.
+# El APK queda en: Releases → "Carrito (última versión)" y en la pestaña Actions.
+name: APK Android
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch: # botón "Run workflow" en la pestaña Actions
+
+permissions:
+  contents: write # para publicar el APK en Releases
+
+# Si subes cambios seguidos, solo se compila el último.
+concurrency:
+  group: apk
+  cancel-in-progress: true
+
+jobs:
+  revisar:
+    name: Revisar código
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+
+  apk:
+    name: Compilar APK
+    needs: revisar
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CI: 1
+      EXPO_NO_TELEMETRY: 1
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+
+      - run: npm ci
+
+      # Cada compilación tiene un número mayor, para que Android la instale como actualización.
+      - name: Número de versión
+        run: |
+          node -e '
+            const fs = require("fs");
+            const app = JSON.parse(fs.readFileSync("app.json", "utf8"));
+            app.expo.android.versionCode = Number(process.env.GITHUB_RUN_NUMBER);
+            fs.writeFileSync("app.json", JSON.stringify(app, null, 2));
+          '
+
+      # Genera la carpeta android/ a partir de app.json (no se guarda en el repositorio).
+      - name: Generar proyecto Android
+        run: npx expo prebuild --platform android --no-install
+
+      # Solo arquitecturas de celulares reales (ARM), para compilar más rápido.
+      - name: Compilar APK
+        working-directory: android
+        run: >
+          ./gradlew assembleRelease --no-daemon
+          -PreactNativeArchitectures=arm64-v8a,armeabi-v7a
+          -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=1g"
+
+      - name: Preparar archivo
+        run: cp android/app/build/outputs/apk/release/app-release.apk carrito.apk
+
+      - name: Guardar APK en Actions
+        uses: actions/upload-artifact@v7
+        with:
+          path: carrito.apk
+          archive: false # se descarga el .apk directo, sin zip
+
+      - name: Publicar en Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete apk --yes --cleanup-tag || true
+          gh api -X DELETE "repos/${GITHUB_REPOSITORY}/git/refs/tags/apk" 2>/dev/null || true
+          gh release create apk carrito.apk \
+            --target "$GITHUB_SHA" \
+            --title "Carrito (última versión)" \
+            --notes "Compilación #${GITHUB_RUN_NUMBER} · rama \`${GITHUB_REF_NAME}\` · commit ${GITHUB_SHA::7}
+
+          **Para instalar:** abre este enlace desde tu Android, descarga \`carrito.apk\` y ábrelo. Si Android lo pide, permite «Instalar apps desconocidas».
+
+          Se instala encima de la versión anterior y conserva tus datos."
