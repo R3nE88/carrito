@@ -1,8 +1,0 @@
-# Temporal: diagnóstico (se borrará).
-name: Diagnóstico simple
-on: workflow_dispatch
-jobs:
-  eco:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Actions funciona"; node --version; java -version
